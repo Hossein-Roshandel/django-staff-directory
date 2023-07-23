@@ -52,6 +52,7 @@ services:
     image: traefik:v2.9
     env_file: .env
     restart: unless-stopped
+    privileged: true # Add this line to fix socket denial error
     command:
       #- "--log.level=DEBUG"
       - "--api.insecure=true"

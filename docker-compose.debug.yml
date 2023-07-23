@@ -17,7 +17,7 @@ services:
     command: ["sh", "-c", "su-exec user python manage.py runserver 0.0.0.0:8000"]
     volumes:
       - "media-data:/var/www/media"
-      - "./website:/usr/src/website"  # mount the source code
+      - "./website:/website"  # mount the source code
     depends_on:
       - postgres
     labels:
@@ -29,6 +29,7 @@ services:
     image: traefik:v2.9
     env_file: .env
     restart: unless-stopped
+    privileged: true # Add this line to fix socket denial error
     command:
       #- "--log.level=DEBUG"
       - "--api.insecure=true"
