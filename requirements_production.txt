@@ -1,0 +1,8 @@
+asgiref==3.7.2
+click==8.1.6
+Django==4.2.3
+django-debug-toolbar==4.1.0
+gunicorn==20.1.0
+psycopg2-binary==2.9.6
+sqlparse==0.4.4
+wait-for-it==2.2.1

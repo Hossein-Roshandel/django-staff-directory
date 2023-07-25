@@ -29,7 +29,10 @@ DEBUG = is_true(os.getenv('DJANGO_DEBUG', 'true'))
 
 ALLOWED_HOSTS = split_with_comma(os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost'))
 
-INTERNAL_IPS = ['127.0.0.1']
+INTERNAL_IPS = [
+    # The Debug Toolbar is shown only if your IP address is listed here
+    '127.0.0.1'
+    ]
 
 if DEBUG:
     # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#configure-internal-ips
@@ -48,9 +51,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'polls.apps.PollsConfig',
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
