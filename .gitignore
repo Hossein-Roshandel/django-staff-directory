@@ -133,3 +133,6 @@ cython_debug/
 
 # Let's Encrypt (Traefik)
 letsencrypt/
+
+# Selenium Webdriver for Testing
+.selenium_drivers/

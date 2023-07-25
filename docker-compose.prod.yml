@@ -1,0 +1,90 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:15
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - "postgres-data2:/var/lib/postgresql/data/:z"
+
+  django:
+    build: 
+      context: .
+      dockerfile: Dockerfile_production
+    #image: django-docker
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - "django_staticfiles-data:/var/www/static:z"
+      - "django_media-data:/var/www/media:z"
+    depends_on:
+      - postgres
+    # environment:
+    #   - "DJANGO_ALLOWED_HOSTS=${MY_DOMAIN}"
+    #   - "DJANGO_CSRF_TRUSTED_ORIGINS=https://${MY_DOMAIN}"
+    #   - "DJANGO_SESSION_COOKIE_SECURE=true"
+    #   - "DJANGO_CSRF_COOKIE_SECURE=true"
+    #   - "DJANGO_SECURE_SSL_REDIRECT=true"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.production.rule=Host(`${MY_DOMAIN}`)"
+      - "traefik.http.routers.production.entrypoints=web"
+      # - "traefik.http.routers.production.entrypoints=websecure"
+      # - "traefik.http.routers.production.tls.certresolver=le-resolver"
+      - "traefik.http.routers.production.priority=1"
+
+  nginx:
+    image: nginx:1.23-alpine
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: django_media-data
+        target: /usr/share/nginx/html/media
+        read_only: true
+        volume:
+          nocopy: true
+      - type: volume
+        source: django_staticfiles-data
+        target: /usr/share/nginx/html/static
+        read_only: true
+        volume:
+          nocopy: true
+    depends_on:
+      - django
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.staticfiles.rule=PathPrefix(`/static/`) || PathPrefix(`/media/`)"
+      # - "traefik.http.routers.staticfiles.entrypoints=websecure"
+      # - "traefik.http.routers.staticfiles.tls.certresolver=le-resolver"
+      - "traefik.http.routers.staticfiles.entrypoints=web"
+      - "traefik.http.routers.staticfiles.priority=2"
+
+  reverse-proxy:
+    image: traefik:v2.9
+    env_file: .env
+    restart: unless-stopped
+    privileged: true # Add this line to fix socket denial error
+    command:
+      #- "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.le-resolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.le-resolver.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.le-resolver.acme.email=admin@yourdomain.com"
+      - "--certificatesresolvers.le-resolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+volumes:
+  postgres-data2:
+  django_staticfiles-data:
+  django_media-data:
