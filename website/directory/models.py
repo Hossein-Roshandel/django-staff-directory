@@ -33,8 +33,9 @@ class Staff(RecordMixin):
     phone = models.CharField(max_length=200,db_index=True)
     office = models.CharField(max_length=200, null=True)
     bio = models.TextField()
+    slug = models.SlugField(verbose_name="WebLink Slug", max_length=100, unique=True,null=True, db_index=True)
     image = models.ImageField(verbose_name="Profile Image", upload_to='staff_images', blank=True)
-    qrcode_image = models.ImageField(verbose_name="Contact Card QRcode",upload_to='qrcode_images', blank=True)
+    qrcode_img_vcard = models.ImageField(verbose_name="Contact Card QRcode",upload_to='vcard-qrcodes', blank=True)
 
 
     def __str__(self):
@@ -90,7 +91,7 @@ class Staff(RecordMixin):
         img_buffer.seek(0)
 
         # Save the image data to the qrcode_image field
-        self.qrcode_image.save(f"{self.lname}_{self.fname}_qrcode.png", 
+        self.qrcode_img_vcard.save(f"{self.lname}-{self.fname}-VCard-QRcode.png", 
                                File(img_buffer), 
                                save=False)
 

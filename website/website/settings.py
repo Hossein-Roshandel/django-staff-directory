@@ -201,6 +201,12 @@ if ADMIN_EMAIL:
     ADMINS = [(ADMIN_NAME, ADMIN_EMAIL)]
 
 
+#Admin Portal Settigs
+ADMIN_SITE_HEADER = os.getenv('ADMIN_SITE_HEADER', "Website Admin")
+ADMIN_SITE_TITLE = os.getenv('ADMIN_SITE_TITLE', "Website Admin Portal")
+ADMIN_INDEX_TITLE = os.getenv('ADMIN_INDEX_TITLE', "Welcome to Website Admin Portal")
+
+
 # Log settings
 LOGGING = {
     'version': 1,
