@@ -1,0 +1,35 @@
+{% extends 'directory/base.html' %}
+{% load static %}
+{% block content %}
+
+
+{% for staff in staffs %}
+<div class="card">
+    <div class="card-body">
+        <div>
+            {% if staff.image %}
+            <img class="profile_img" src="{{ staff.image.url }}" alt="Staff Photo" width="100" height="100">
+            {% else %}
+            <img class="profile_img" src='{% static "directory/images/default_user_avatar.png" %}' alt="Default Profile Photo" width="100" height="100">
+            {% endif %}
+            <span class="card-title">{{ staff.full_name }}</span>
+        </div>
+        <h5 class="card-subtitle mb-2 text-muted">{{ staff.position }}</h5>
+        <p class="card-text">{{ staff.bio }}</p>
+        {% if staff.qrcode_img_vcard %}
+        <a href="{{ staff.qrcode_img_vcard.url }}" class="card-link">
+            <img src="{{ staff.qrcode_img_vcard.url }}" alt="QR Code" width="100" height="100">
+        </a>
+        {% else %}
+        <img src="static/directory/images/default_NA_image.png" alt="QR Code Not Available" width="100" height="100">
+        {% endif %}
+    </div>
+
+{% empty %}
+<p>No staffs are available.</p>
+
+{% endfor %}
+
+
+
+{% endblock %}
