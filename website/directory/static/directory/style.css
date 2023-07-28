@@ -4,36 +4,61 @@
     box-sizing: border-box;
 }
 
+body {
+    font-size: large;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f2f2f2;
+}
+
 h1 {
     margin: 2rem;
     text-align: center;
 }
 
 .card {
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
     margin: auto;
     width: 50%;
+    max-width: 600px;
+    min-width: 300px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+} 
+
+
+.card-text {    
+    color: #444;
+    line-height: 1.4;
+    margin: auto;
+    margin-bottom: 20px;
+    text-align: justify;
+    width: 90%;
 }
-.card-title{
+
+.contact-info{
+    display: inline-block;
     text-align: left;
-    vertical-align: middle;
+    vertical-align: top;
     margin: 1rem;
 }
 img {
-    max-width: 100%;
+    max-width: 25%;
     margin: 2rem;
 }
 .profile_img {
     border-radius: 100%;
 } 
 
+.staff-avatar{
+    display: inline-block;
+}
+
 /* Path: website/directory/static/directory/style.css */
 
-
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f2f2f2;
-}
 
 .staff-list {
     display: grid;
@@ -42,14 +67,6 @@ body {
     padding: 20px;
 }
 
-.card {
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    overflow: hidden;
-    transition: box-shadow 0.3s ease;
-}
 
 .card:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -57,7 +74,7 @@ body {
 
 
 
-.card-body {
+/* .card-body {
     padding: 20px;
 }
 
@@ -70,10 +87,6 @@ body {
     font-size: 1.1rem;
     color: #888;
     margin-bottom: 10px;
-}
+} */
 
-.card-text {
-    color: #444;
-    line-height: 1.4;
-    margin-bottom: 20px;
-}
+
