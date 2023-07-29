@@ -28,10 +28,10 @@ class RecordMixin(BaseTimestampedModel,BaseUserTrackedModel):
 class Staff(RecordMixin):
     fname = models.CharField(verbose_name="First Name", max_length=200,db_index=True, null=False)
     lname = models.CharField(verbose_name="Last Name",max_length=200,db_index=True, null=False)
-    title = models.CharField(max_length=200,null=True, default="")
+    title = models.CharField(max_length=200,null=True, default="", blank=True)
     email = models.EmailField(db_index=True, unique=True, null=False)
     phone = models.CharField(max_length=200,db_index=True)
-    office = models.CharField(max_length=200, null=True)
+    office = models.CharField(max_length=200, null=True, blank=True)
     bio = models.TextField()
     slug = models.SlugField(verbose_name="WebLink Slug", max_length=100, unique=True,null=True, db_index=True)
     image = models.ImageField(verbose_name="Profile Image", upload_to='staff_images', blank=True)

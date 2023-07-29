@@ -20,7 +20,6 @@ class StaffAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['slug'].widget = SlugAutofillWidget(
-            #attrs={'readonly': False},
             source_fields=['fname','lname','phone'],
             separator='-'
         )
