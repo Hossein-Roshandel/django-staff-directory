@@ -3,6 +3,9 @@ from django import forms
 from django.contrib import admin
 from django.contrib.admin.widgets import AdminFileWidget
 from django.utils.safestring import mark_safe
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
+from import_export.fields import Field
 from .models import Staff
 # Register your models here.
 
@@ -10,6 +13,28 @@ class DirectoryAdminSite(admin.AdminSite):
     site_header = 'Directory Edit Portal'
     site_title = 'Directory Edit Portal'
     index_title = 'Welcome to Directory Edit Portal'
+
+
+class StaffResource(resources.ModelResource):
+    fname = Field(attribute='fname', column_name='First Name')
+    lname = Field(attribute='lname', column_name='Last Name')
+    title = Field(attribute='title', column_name='Title')
+    email = Field(attribute='email', column_name='Email')
+    phone = Field(attribute='phone', column_name='Phone')
+    office = Field(attribute='office', column_name='Office')
+    bio = Field(attribute='bio', column_name='Bio')
+    is_active = Field(attribute='is_active', column_name='Active')
+    slug = Field(attribute='slug', column_name='Slug')
+    created_at = Field(attribute='created_at', column_name='Created At', readonly=True)
+    updated_at = Field(attribute='updated_at', column_name='Updated At', readonly=True)
+    created_by = Field(attribute='created_by', column_name='Created By', readonly=True)    
+    updated_by = Field(attribute='updated_by', column_name='Updated By', readonly=True)
+    image = Field(attribute='image', column_name='Image', readonly=True)
+    qrcode_img_vcard = Field(attribute='qrcode_img_vcard', column_name='Contact QR-Code', readonly=True)
+
+    class Meta:
+        model = Staff
+
 
 
 class StaffAdminForm(forms.ModelForm):
@@ -43,8 +68,9 @@ class SlugAutofillWidget(forms.TextInput):
     
 
 
-class StaffAdmin(admin.ModelAdmin):
+class StaffAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     form = StaffAdminForm
+    resource_classes = [StaffResource]
 
     list_display = ('full_name', 'title', 'email', 'phone', 'office', 'is_active')
     list_filter = ('title', 'is_active', "created_at", "updated_at")

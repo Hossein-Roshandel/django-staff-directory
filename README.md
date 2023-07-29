@@ -36,7 +36,7 @@ So, what do you get by using this project as a template for your project? Let's 
 
 1. Clone the repository to your computer and go to the `django-docker-template` directory:
 ```console
-git clone https://github.com/amerkurev/django-docker-template.git
+git clone https://github.com/Hossein-Roshandel/django-staff-directory.git
 cd django-docker-template
 ```
 
@@ -112,7 +112,7 @@ For the Let's Encrypt HTTP challenge you will need:
 
 1. Clone the repository on your host and go to the `django-docker-template` directory:
 ```console
-git clone https://github.com/amerkurev/django-docker-template.git
+git clone https://github.com/Hossein-Roshandel/django-staff-directory.git
 cd django-docker-template
 ```
 

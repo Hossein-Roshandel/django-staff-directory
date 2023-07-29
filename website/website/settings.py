@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'directory.apps.DirectoryConfig',
     'polls.apps.PollsConfig',
+    'import_export',
     "debug_toolbar",
 ]
 
@@ -205,6 +206,12 @@ if ADMIN_EMAIL:
 ADMIN_SITE_HEADER = os.getenv('ADMIN_SITE_HEADER', "Website Admin")
 ADMIN_SITE_TITLE = os.getenv('ADMIN_SITE_TITLE', "Website Admin Portal")
 ADMIN_INDEX_TITLE = os.getenv('ADMIN_INDEX_TITLE', "Welcome to Website Admin Portal")
+IMPORT_EXPORT_USE_TRANSACTIONS = False
+IMPORT_EXPORT_ESCAPE_HTML_ON_EXPORT=True
+IMPORT_EXPORT_ESCAPE_FORMULAE_ON_EXPORT=True
+IMPORT_EXPORT_IMPORT_PERMISSION_CODE = 'add' 
+IMPORT_EXPORT_EXPORT_PERMISSION_CODE = 'view'
+
 
 
 # Log settings
