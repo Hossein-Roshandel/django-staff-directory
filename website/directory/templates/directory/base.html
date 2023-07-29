@@ -1,16 +1,29 @@
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
 {% block header %}
 <head>
     {% block title %}<title>Staff Directory</title> {% endblock %}
-
-    {% block css-style %}<link rel="stylesheet", href='{% static "directory/style.css" %}'>{% endblock %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block meta %}{% include 'directory/components/meta.html' %}{% endblock %}
+    {% block css-style %}{% include 'directory/components/css-links.html' %}{% endblock %}
+    {% block js-script-head %}{% endblock %}
 </head>
-
 {% endblock %}
-<h1>Welcome to the Staff Directory</h1>
+<body>
+{% block navbar %}
+{% include 'directory/components/navbar.html' %}
+{% endblock %}
 
-<div>
+<div class="main-content">
     {% block content %}{% endblock %}
 </div>
+</body>
+{% block footer %}
+<footer>
+    {% include 'directory/components/footer.html' %}
+</footer>
+{% endblock %}
+{% block js-script-footer %}
+{% include 'directory/components/js-scripts-footer.html' %}
+{% endblock %}
+</html>

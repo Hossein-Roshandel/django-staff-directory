@@ -111,5 +111,5 @@ class StaffAdmin(ImportExportModelAdmin,admin.ModelAdmin):
             obj.updated_by = request.user
         obj.save()
 
-directory_admin_site = DirectoryAdminSite(name='directory_admin')
+directory_admin_site = DirectoryAdminSite(name='portal')
 directory_admin_site.register(Staff, StaffAdmin)
