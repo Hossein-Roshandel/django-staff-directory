@@ -1,8 +1,9 @@
+{% load static %}
 {% block header %}
 <head>
     {% block title %}<title>Staff Directory</title> {% endblock %}
 
-    {% block css-style %}<link rel="stylesheet", href="static/directory/style.css">{% endblock %}
+    {% block css-style %}<link rel="stylesheet", href='{% static "directory/style.css" %}'>{% endblock %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>

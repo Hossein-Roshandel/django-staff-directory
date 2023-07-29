@@ -5,5 +5,6 @@ from . import views
 
 urlpatterns = [
     path("",views.index, name="index"),
+    path("staff-details/<slug:slug>/", views.StaffDetailView.as_view(), name="staff_details"),
     path('portal/',directory_admin_site.urls),
 ]
