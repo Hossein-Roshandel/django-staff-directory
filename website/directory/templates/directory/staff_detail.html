@@ -1,14 +1,8 @@
 {% extends 'directory/base.html' %}
+
 {% block content %}
 
-
-{% for staff in staffs %}
 {% include 'directory/components/detail-card.html' %}
-{% empty %}
-<p>No staffs are available.</p>
-
-{% endfor %}
-
 
 
 {% endblock %}

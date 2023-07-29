@@ -26,7 +26,13 @@ django.jQuery(document).ready(
 
             var slugParts = sourceFields.map(
                 function (field) {
-                    return slugify(field.val());
+                    let val = field.val();
+                    if (field.attr("id").startsWith("id_phone"))
+                    {   // For security reasons we just want to include the last four digits of the phone number
+                        // and the whole slug is reasonably unique for the database
+                        val = val.slice(-4);
+                    }
+                    return slugify(val);
                 }
             );
 
