@@ -1,6 +1,6 @@
-FROM python:3.11-alpine3.18@sha256:0a56f24afa1fc7f518aa690cb8c7be661225e40b157d9bb8c6ef402164d9faa7 as base
+FROM python:3.11-alpine3.18@sha256:0a56f24afa1fc7f518aa690cb8c7be661225e40b157d9bb8c6ef402164d9faa7 AS base
 
-FROM base as builder
+FROM base AS builder
 
 RUN apk update && apk --no-cache add python3-dev libpq-dev && mkdir /install
 WORKDIR /install
