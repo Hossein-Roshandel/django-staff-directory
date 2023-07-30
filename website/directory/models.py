@@ -32,6 +32,7 @@ class Staff(RecordMixin):
     email = models.EmailField(db_index=True, unique=True, null=False)
     phone = models.CharField(max_length=200,db_index=True)
     office = models.CharField(max_length=200, null=True, blank=True)
+    company_url = models.URLField(verbose_name="Company Website", max_length=200, null=True, blank=True)
     bio = models.TextField()
     slug = models.SlugField(verbose_name="WebLink Slug", max_length=100, unique=True,null=True, db_index=True)
     image = models.ImageField(verbose_name="Profile Image", upload_to='staff_images', blank=True)
@@ -51,6 +52,8 @@ class Staff(RecordMixin):
         contac_card = f"BEGIN:VCARD\n" \
                   f"VERSION:3.0\n" \
                   f"N:{self.full_name} ({self.title})\n" \
+                  f"PHOTO;VALUE=uri:{self.image.url}\n" \
+                  f"URL;type=pref:{self.company_url}\n" \
                   f"ORG:{self.office}\n" \
                     f"TEL:{self.phone}\n" \
                     f"EMAIL:{self.email}\n" \
