@@ -3,6 +3,8 @@ from io import BytesIO
 from django.db import models
 from django.core.files import File
 from django.contrib.auth.models import User
+from django.urls import reverse
+from website.settings import DJANGO_BASE_URL
 
 # Create your models here.
 class BaseTimestampedModel(models.Model):
@@ -51,8 +53,10 @@ class Staff(RecordMixin):
         contac_card = f"BEGIN:VCARD\n" \
                   f"VERSION:3.0\n" \
                   f"N:{self.full_name} ({self.title})\n" \
-                  f"PHOTO;VALUE=uri:{self.image.url if self.image else ''}\n" \
+                  f"PHOTO;VALUE=uri:{DJANGO_BASE_URL}{self.image.url if self.image else ''}\n" \
                   f"URL;type=pref:{self.company_url}\n" \
+                  f"URL;type=company:{DJANGO_BASE_URL}{reverse('staff_details',args=[self.slug])}\n" \
+                  f"TITLE:{self.title}\n"\
                   f"ORG:{self.office}\n" \
                     f"TEL:{self.phone}\n" \
                     f"EMAIL:{self.email}\n" \
