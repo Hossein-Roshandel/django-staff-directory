@@ -161,7 +161,8 @@ STATIC_URL = 'static/'
 
 STATIC_ROOT = os.environ['DJANGO_STATIC_ROOT']
 
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_DIRS = [BASE_DIR / 'static',
+                    os.path.join(BASE_DIR, 'directory/static'),]
 
 
 # Default primary key field type
