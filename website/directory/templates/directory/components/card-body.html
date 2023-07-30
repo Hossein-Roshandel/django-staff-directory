@@ -1,0 +1,12 @@
+{% load static %}
+
+<div class="card-body">
+    <p class="card-text">{{ staff.bio }}</p>
+    {% if staff.qrcode_img_vcard  %}
+    <a href="{{ staff.qrcode_img_vcard.url }}" class="card-link">
+        <img class="card-img qr-code" src="{{ staff.qrcode_img_vcard.url }}" alt="QR Code" >
+    </a>
+    {% else %}
+    <img class="card-img" src='{% static "directory/images/default_NA_image.png" %}' alt="QR Code Not Available" >
+    {% endif %}
+</div>

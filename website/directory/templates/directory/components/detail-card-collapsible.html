@@ -1,20 +1,7 @@
 {% load static %}
 <div class="card">
     <div class="card-header" id="{{staff.slug}}_card_heading">
-        <div class="staff-avatar">
-            {% if staff.image %}
-            <img class="profile_img card-img" src="{{ staff.image.url }}" alt="Staff Photo" >
-            {% else %}
-            <img class="profile_img card-img" src='{% static "directory/images/default_user_avatar.png" %}' alt="Default Profile Photo">
-            {% endif %}
-        </div>   
-        <div class="contact-info">
-            <h4 class="card-title"><a href={% url "staff_details" staff.slug %} class="details-link">{{ staff.full_name }}</a></h4>
-            <h5 class"card-title contact-text">({{staff.title}})</h5>
-            <h5 class="card-subtitle staff-name mb-2 text-muted">{{ staff.position }}</h5>
-            <div class="contact-text">{{ staff.email }}</div>
-            <div class="contact-text">{{ staff.phone }}</div>
-        </div>
+        {% include 'directory/components/avatar-contact.html' %}
         <button class="btn-collapse btn btn-link btn-block text-left" 
         type="button" data-toggle="collapse" 
         data-target="#{{staff.slug}}_detail_body" 
@@ -24,15 +11,6 @@
         </button>
     </div>
     <div class="collapse" id="{{staff.slug}}_detail_body" aria-labelledby="#{{staff.slug}}_card_heading">
-        <div class="card-body">
-            <p class="card-text">{{ staff.bio }}</p>
-            {% if staff.qrcode_img_vcard  %}
-            <a href="{{ staff.qrcode_img_vcard.url }}" class="card-link">
-                <img class="card-img qr-code" src="{{ staff.qrcode_img_vcard.url }}" alt="QR Code" >
-            </a>
-            {% else %}
-            <img class="card-img" src='{% static "directory/images/default_NA_image.png" %}' alt="QR Code Not Available" >
-            {% endif %}
-        </div>
+        {% include 'directory/components/card-body.html' %}
     </div>
 </div>

@@ -1,0 +1,16 @@
+{% load static %}
+
+<div class="staff-avatar">
+    {% if staff.image %}
+    <img class="profile_img card-img" src="{{ staff.image.url }}" alt="Staff Photo" >
+    {% else %}
+    <img class="profile_img card-img" src='{% static "directory/images/default_user_avatar.png" %}' alt="Default Profile Photo">
+    {% endif %}
+</div>   
+<div class="contact-info">
+    <h4 class="card-title"><a href={% url "staff_details" staff.slug %} class="details-link">{{ staff.full_name }}</a></h4>
+    <h5 class"card-title contact-text">({{staff.title}})</h5>
+    <h5 class="card-subtitle staff-name mb-2 text-muted">{{ staff.position }}</h5>
+    <div class="contact-text">{{ staff.email }}</div>
+    <div class="contact-text">{{ staff.phone }}</div>
+</div>
