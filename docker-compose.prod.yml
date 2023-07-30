@@ -19,18 +19,11 @@ services:
       - "django_media-data:/var/www/media:z"
     depends_on:
       - postgres
-    # environment:
-    #   - "DJANGO_ALLOWED_HOSTS=${MY_DOMAIN}"
-    #   - "DJANGO_CSRF_TRUSTED_ORIGINS=https://${MY_DOMAIN}"
-    #   - "DJANGO_SESSION_COOKIE_SECURE=true"
-    #   - "DJANGO_CSRF_COOKIE_SECURE=true"
-    #   - "DJANGO_SECURE_SSL_REDIRECT=true"
+  
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.production.rule=Host(`${MY_DOMAIN}`)"
       - "traefik.http.routers.production.entrypoints=web"
-      # - "traefik.http.routers.production.entrypoints=websecure"
-      # - "traefik.http.routers.production.tls.certresolver=le-resolver"
       - "traefik.http.routers.production.priority=1"
 
   nginx:
@@ -55,8 +48,6 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.staticfiles.rule=PathPrefix(`/static/`) || PathPrefix(`/media/`)"
-      # - "traefik.http.routers.staticfiles.entrypoints=websecure"
-      # - "traefik.http.routers.staticfiles.tls.certresolver=le-resolver"
       - "traefik.http.routers.staticfiles.entrypoints=web"
       - "traefik.http.routers.staticfiles.priority=2"
       
@@ -77,7 +68,9 @@ services:
       - "--certificatesresolvers.le-resolver.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.le-resolver.acme.email=admin@yourdomain.com"
       - "--certificatesresolvers.le-resolver.acme.storage=/letsencrypt/acme.json"
-      - "--entrypoints.web.http.middlewares=production-https-redirect"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
     ports:
       - "80:80"
       - "443:443"

@@ -12,9 +12,7 @@ services:
       - "traefik.http.routers.production.entrypoints=websecure"
       - "traefik.http.routers.production.tls.certresolver=le-resolver"
       - "traefik.http.routers.production.priority=1"
-      - "traefik.http.middlewares.production-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.production-https-redirect.redirectscheme.permanent=true"
-
+      
   nginx:
     labels:
       - "traefik.http.routers.staticfiles.entrypoints=websecure"
