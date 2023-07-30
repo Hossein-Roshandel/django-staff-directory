@@ -38,7 +38,6 @@ class Staff(RecordMixin):
     image = models.ImageField(verbose_name="Profile Image", upload_to='staff_images', blank=True)
     qrcode_img_vcard = models.ImageField(verbose_name="Contact Card QRcode",upload_to='vcard-qrcodes', blank=True)
 
-
     def __str__(self):
         return f"{self.title} {self.fname} {self.lname}"
     
@@ -52,7 +51,7 @@ class Staff(RecordMixin):
         contac_card = f"BEGIN:VCARD\n" \
                   f"VERSION:3.0\n" \
                   f"N:{self.full_name} ({self.title})\n" \
-                  f"PHOTO;VALUE=uri:{self.image.url}\n" \
+                  f"PHOTO;VALUE=uri:{self.image.url if self.image else ''}\n" \
                   f"URL;type=pref:{self.company_url}\n" \
                   f"ORG:{self.office}\n" \
                     f"TEL:{self.phone}\n" \

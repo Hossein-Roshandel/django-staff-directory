@@ -19,6 +19,12 @@ footer .copyright{font-size:14px;margin-bottom:0;text-align:center}
 
 h1,h2,h3,h4,h5,h6{font-weight:800;font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif}
 
+.btn-collapse {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+}
+
+
 .card {
     border: 1px solid #e0e0e0;
     border-radius: 5px;
@@ -55,9 +61,13 @@ h1,h2,h3,h4,h5,h6{font-weight:800;font-family:'Open Sans','Helvetica Neue',Helve
 }
 
 .card-img {
+    display: inline-block;
     min-width: 100px;
-    max-width: 50%;
+    max-width: 30%;
     margin: 1rem;
+}
+.card-img.qr-code{
+    min-width: 200px;
 }
 
 .profile_img {
@@ -66,6 +76,9 @@ h1,h2,h3,h4,h5,h6{font-weight:800;font-family:'Open Sans','Helvetica Neue',Helve
 
 .staff-avatar{
     display: inline-block;
+    margin: auto;
+    max-width: 35%;
+
 }
 
 /* Path: website/directory/static/directory/style.css */

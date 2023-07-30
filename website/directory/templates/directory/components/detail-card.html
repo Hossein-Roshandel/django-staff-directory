@@ -15,18 +15,15 @@
             <div class="contact-text">{{ staff.email }}</div>
             <div class="contact-text">{{ staff.phone }}</div>
         </div>
-        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#{{staff.full_name}}_details" aria-expanded="true" aria-controls="collapseOne">
-            Collapsible Group Item #1
-        </button>
     </div>
-    <div class="card-body">
-        <p class="card-text">{{ staff.bio }}</p>
-        {% if staff.qrcode_img_vcard %}
-        <a href="{{ staff.qrcode_img_vcard.url }}" class="card-link">
-            <img class="card-img" src="{{ staff.qrcode_img_vcard.url }}" alt="QR Code" >
-        </a>
-        {% else %}
-        <img class="card-img" src="static/directory/images/default_NA_image.png" alt="QR Code Not Available" >
-        {% endif %}
-    </div>
+<div class="card-body">
+    <p class="card-text">{{ staff.bio }}</p>
+    {% if staff.qrcode_img_vcard %}
+    <a href="{{ staff.qrcode_img_vcard.url }}" class="card-link">
+        <img class="card-img qr-code" src="{{ staff.qrcode_img_vcard.url }}" alt="QR Code" >
+    </a>
+    {% else %}
+    <img class="card-img" src='{% static "directory/images/default_NA_image.png" %}' alt="QR Code Not Available" >
+    {% endif %}
+</div>
 </div>
