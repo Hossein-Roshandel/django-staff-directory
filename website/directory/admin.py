@@ -22,6 +22,7 @@ class StaffResource(resources.ModelResource):
     email = Field(attribute='email', column_name='Email')
     phone = Field(attribute='phone', column_name='Phone')
     office = Field(attribute='office', column_name='Office')
+    company_url = Field(attribute='company_url', column_name='Company Website')
     bio = Field(attribute='bio', column_name='Bio')
     is_active = Field(attribute='is_active', column_name='Active')
     slug = Field(attribute='slug', column_name='Slug')
@@ -79,7 +80,7 @@ class StaffAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     readonly_fields = ('qrcode_img_vcard','vcard_image','staff_image',"created_at", "updated_at", "created_by", "updated_by")
     fieldsets = (
         (None, {
-            'fields': ('fname', 'lname', 'title', 'email', 'phone', 'office', 'bio', ('image', 'staff_image'), 'vcard_image', 'slug')
+            'fields': ('fname', 'lname', 'title', 'email', 'phone', 'office','company_url', 'bio', ('image', 'staff_image'), 'vcard_image', 'slug')
         }),
         ('Record Status', {
             'fields': ('is_active',),
