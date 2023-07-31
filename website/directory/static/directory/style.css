@@ -19,6 +19,10 @@ footer .copyright{font-size:14px;margin-bottom:0;text-align:center}
 
 h1,h2,h3,h4,h5,h6{font-weight:800;font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif}
 
+.brand-img{
+    max-height: 2rem;
+}
+
 .btn-collapse {
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
