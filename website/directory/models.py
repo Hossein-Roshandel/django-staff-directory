@@ -139,6 +139,10 @@ class Staff(RecordMixin):
         img.save(img_buffer, format="PNG")
         img_buffer.seek(0)
 
+        #Delete the old image if it exists
+        if self.qrcode_img_vcard:
+            self.qrcode_img_vcard.delete(save=False)
+
         # Save the image data to the qrcode_image field
         self.qrcode_img_vcard.save(
             f"{self.lname}-{self.fname}-VCard-QRcode.png", File(img_buffer), save=False
