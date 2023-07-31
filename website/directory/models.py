@@ -56,8 +56,8 @@ class Staff(RecordMixin):
                   f"VERSION:3.0\n" \
                   f"N:{self.full_name} ({self.title})\n" \
                   f"PHOTO;VALUE=uri:{DJANGO_BASE_URL}{self.image.url if self.image else ''}\n" \
-                  f"URL;type=pref:{self.company_url}\n" \
-                  f"URL;type=company:{DJANGO_BASE_URL}{reverse('staff_details',args=[self.slug])}\n" \
+                  f"URL;type=company:{self.company_url}\n" \
+                  f"URL;type=pref:{DJANGO_BASE_URL}{reverse('staff_details',args=[self.slug])}\n" \
                   f"TITLE:{self.title}\n"\
                   f"ORG:{self.office}\n" \
                     f"TEL:{self.phone}\n" \
@@ -113,7 +113,7 @@ class Staff(RecordMixin):
     
 
 @functools.cache
-def load_logo(base_width: int=400):
+def load_logo(base_width: int=200):
     logo = Image.open(COMPANY_LOGO)
     # Resize the logo to be a max of base_width wide and proportional height
     w_percent = (base_width / float(logo.size[0]))
