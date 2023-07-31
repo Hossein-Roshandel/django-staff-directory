@@ -1,0 +1,9 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Linkedin Contact
+    url: https://www.linkedin.com/in/hroshandel/
+    about: Have any questions or need any help? Please contact us via Linkedin
+
+  - name: Weblog
+    url: https://hossein.codes/contact
+    about: Visit our weblog for more information about us
