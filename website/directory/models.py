@@ -1,10 +1,12 @@
 import qrcode
+import functools
+from PIL import Image, ImageDraw
 from io import BytesIO
 from django.db import models
 from django.core.files import File
 from django.contrib.auth.models import User
 from django.urls import reverse
-from website.settings import DJANGO_BASE_URL
+from website.settings import DJANGO_BASE_URL, COMPANY_LOGO
 
 # Create your models here.
 class BaseTimestampedModel(models.Model):
@@ -81,9 +83,11 @@ class Staff(RecordMixin):
         """
         Automatically generate and update the QR code image
         """
+        logo = load_logo()
+
         qr = qrcode.QRCode(
             version=1,
-            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            error_correction=qrcode.constants.ERROR_CORRECT_H,
             box_size=10,
             border=4,
         )
@@ -91,6 +95,11 @@ class Staff(RecordMixin):
         qr.make(fit=True)
 
         img = qr.make_image(fill_color="black", back_color="white")
+
+        # Paste the logo in the middle of the QR code
+        logo_position = ((img.size[0] - logo.size[0]) // 2, (img.size[1] - logo.size[1]) // 2)
+        img.paste(logo, logo_position, mask=logo)
+
         # Create a BytesIO object to hold the image data
         img_buffer = BytesIO()
         img.save(img_buffer, format='PNG')
@@ -103,4 +112,19 @@ class Staff(RecordMixin):
 
     
 
+@functools.cache
+def load_logo(base_width: int=400):
+    logo = Image.open(COMPANY_LOGO)
+    # Resize the logo to be a max of base_width wide and proportional height
+    w_percent = (base_width / float(logo.size[0]))
+    h_size = int((float(logo.size[1]) * float(w_percent)))
+    logo = logo.resize((base_width, h_size)) #, Image.Resampling.LANCZOS) #let resampling off for now
 
+    transparent_background = Image.new('RGBA', logo.size, (0, 0, 0, 0))
+    draw = ImageDraw.Draw(transparent_background)
+    draw.ellipse((0, 0, logo.size[0], logo.size[1]), fill=(255, 255, 255, 255))
+    transparent_background.paste(logo, mask=logo)
+
+    logo = transparent_background
+
+    return logo
