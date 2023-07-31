@@ -1,9 +1,15 @@
 version: "3.9"
+
+networks:
+  traefik-default-network:
+
 services:
   postgres:
     image: postgres:15
     env_file: .env
     restart: unless-stopped
+    networks:
+        - traefik-default-network
     volumes:
       - "postgres-data2:/var/lib/postgresql/data/:z"
 
@@ -14,6 +20,8 @@ services:
     #image: django-docker
     env_file: .env
     restart: unless-stopped
+    networks:
+        - traefik-default-network
     volumes:
       - "django_staticfiles-data:/var/www/static:z"
       - "django_media-data:/var/www/media:z"
@@ -30,6 +38,8 @@ services:
     image: nginx:1.23-alpine
     env_file: .env
     restart: unless-stopped
+    networks:
+        - traefik-default-network
     volumes:
       - type: volume
         source: django_media-data
@@ -56,6 +66,8 @@ services:
     image: traefik:v2.9
     env_file: .env
     restart: unless-stopped
+    networks:
+        - traefik-default-network
     privileged: true # Add this line to fix socket denial error
     command:
       #- "--log.level=DEBUG"
