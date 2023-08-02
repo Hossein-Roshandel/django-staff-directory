@@ -48,10 +48,10 @@ class RecordMixin(BaseTimestampedModel, BaseUserTrackedModel):
 
 
 class Staff(RecordMixin):
-    fname = models.CharField(
+    first_name = models.CharField(
         verbose_name="First Name", max_length=200, db_index=True, null=False
     )
-    lname = models.CharField(
+    last_name = models.CharField(
         verbose_name="Last Name", max_length=200, db_index=True, null=False
     )
     title = models.CharField(max_length=200, null=True, default="", blank=True)
@@ -77,28 +77,32 @@ class Staff(RecordMixin):
     )
 
     def __str__(self):
-        return f"{self.title} {self.fname} {self.lname}"
+        return f"{self.title} {self.first_name} {self.last_name}"
 
     @property
     def full_name(self):
-        return f"{self.fname} {self.lname}"
+        return f"{self.first_name} {self.last_name}"
 
     @property
     def contact_card_data(self):
         # Format the data as a vCard (Virtual Contact File)
-        contac_card = (
-            f"BEGIN:VCARD\n"
-            f"VERSION:3.0\n"
-            f"N:{self.full_name} ({self.title})\n"
-            f"URL;type=company:{self.company_url}\n"
-            f"URL;type=pref:{DJANGO_BASE_URL}{reverse('staff_details',args=[self.slug])}\n"
-            f"TITLE:{self.title}\n"
-            f"ORG:{self.office}\n"
-            f"TEL:{self.phone}\n"
-            f"EMAIL:{self.email}\n"
-            f"END:VCARD"
-        )
-        return contac_card
+        vcf = [
+            "BEGIN:VCARD",
+            "VERSION:3.0",
+            f"N:{self.full_name}",
+            f"TITLE:{self.title}",
+            f"TEL:{self.phone}",
+            f"EMAIL:{self.email}",
+            f"URL;type=pref:{DJANGO_BASE_URL}{reverse('staff_details',args=[self.slug])}",
+        ]
+        if self.office:
+            vcf.append(f"ORG:{self.office}")
+        if self.company_url:
+            # Because the field is not mandatory, dont want to add None
+            vcf.append(f"URL;type=company:{self.company_url}")
+        vcf.append("END:VCARD")
+        return "\n".join(vcf)
+        
 
     @property
     def any_contact_data_changed(self):
@@ -147,7 +151,7 @@ class Staff(RecordMixin):
 
         # Save the image data to the qrcode_image field
         self.qrcode_img_vcard.save(
-            f"{self.lname}-{self.fname}-VCard-QRcode.png", File(img_buffer), save=False
+            f"{self.last_name}-{self.first_name}-VCard-QRcode.png", File(img_buffer), save=False
         )
 
 

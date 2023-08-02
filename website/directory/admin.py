@@ -11,8 +11,8 @@ from .models import Staff
 
 # Register your models here.
 class StaffResource(resources.ModelResource):
-    fname = Field(attribute="fname", column_name="First Name")
-    lname = Field(attribute="lname", column_name="Last Name")
+    first_name = Field(attribute="first_name", column_name="First Name")
+    last_name = Field(attribute="last_name", column_name="Last Name")
     title = Field(attribute="title", column_name="Title")
     email = Field(attribute="email", column_name="Email")
     phone = Field(attribute="phone", column_name="Phone")
@@ -42,7 +42,7 @@ class StaffAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["slug"].widget = SlugAutofillWidget(
-            source_fields=["fname", "lname", "phone"], separator="-"
+            source_fields=["first_name", "last_name", "phone"], separator="-"
         )
 
 
@@ -69,8 +69,8 @@ class StaffAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 
     list_display = ("full_name", "title", "email", "phone", "office", "is_active")
     list_filter = ("title", "is_active", "created_at", "updated_at")
-    search_fields = ("fname", "lname", "title", "email", "phone", "office")
-    ordering = ("lname", "fname", "title")
+    search_fields = ("first_name", "last_name", "title", "email", "phone", "office")
+    ordering = ("last_name", "first_name", "title")
     readonly_fields = (
         "qrcode_img_vcard",
         "vcard_image",
@@ -85,8 +85,8 @@ class StaffAdmin(ImportExportModelAdmin, admin.ModelAdmin):
             None,
             {
                 "fields": (
-                    "fname",
-                    "lname",
+                    "first_name",
+                    "last_name",
                     "title",
                     "email",
                     "phone",
