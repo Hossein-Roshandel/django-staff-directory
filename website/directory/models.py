@@ -4,9 +4,11 @@ from PIL import Image, ImageDraw
 from io import BytesIO
 from django.db import models
 from django.core.files import File
-from django.contrib.auth.models import User
+
+# from django.contrib.auth.models import User
 from django.urls import reverse
 from website.settings import DJANGO_BASE_URL, COMPANY_LOGO
+from accounts.models import CustomUser
 
 
 # Create your models here.
@@ -20,14 +22,14 @@ class BaseTimestampedModel(models.Model):
 
 class BaseUserTrackedModel(models.Model):
     created_by = models.ForeignKey(
-        User,
+        CustomUser,
         on_delete=models.SET_NULL,
         related_name="%(app_label)s_%(class)s_created_by",
         null=True,
         blank=True,
     )
     updated_by = models.ForeignKey(
-        User,
+        CustomUser,
         on_delete=models.SET_NULL,
         related_name="%(app_label)s_%(class)s_updated_by",
         null=True,
@@ -139,7 +141,7 @@ class Staff(RecordMixin):
         img.save(img_buffer, format="PNG")
         img_buffer.seek(0)
 
-        #Delete the old image if it exists
+        # Delete the old image if it exists
         if self.qrcode_img_vcard:
             self.qrcode_img_vcard.delete(save=False)
 

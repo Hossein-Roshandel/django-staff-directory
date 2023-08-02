@@ -53,7 +53,7 @@ COPY $PROJECT_NAME $DJANGO_BASE_DIR
 # User
 RUN chmod +x /docker-entrypoint.sh /docker-cmd.sh && \
     apk --no-cache add su-exec libpq-dev && \
-	apk --no-cache add xvfb firefox dbus ttf-dejavu && \
+	# apk --no-cache add xvfb firefox dbus ttf-dejavu && \
     mkdir -p $DJANGO_STATIC_ROOT $DJANGO_MEDIA_ROOT $DJANGO_SQLITE_DIR && \
     adduser -s /bin/sh -D -u $USER_UID $USER && \
     chown -R $USER:$USER $DJANGO_BASE_DIR $DJANGO_STATIC_ROOT $DJANGO_MEDIA_ROOT $DJANGO_SQLITE_DIR
