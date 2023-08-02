@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class DirectoryConfig(AppConfig):
+class RegisterConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "directory"
+    name = "register"

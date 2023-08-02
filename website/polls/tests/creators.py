@@ -2,6 +2,7 @@ import datetime
 from polls.models import Question
 from django.utils import timezone
 
+
 def create_question(question_text, days):
     """
     Create a question with the given `question_text` and published the

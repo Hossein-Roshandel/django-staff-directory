@@ -21,10 +21,10 @@ from django.conf import settings
 
 
 urlpatterns = [
-    
-    path('admin/', admin.site.urls, name="admin"),
-    #path('polls/', include('polls.urls')),
-    path('', include('directory.urls')),
+    path("admin/", admin.site.urls, name="admin"),
+    path("register/", include("register.urls")),
+    # path('polls/', include('polls.urls')),
+    path("", include("directory.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
 ]
 

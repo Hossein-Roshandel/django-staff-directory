@@ -1,0 +1,56 @@
+{% extends 'directory/base.html' %}
+{% block title %} New User Registration {% endblock %}
+{% block content %}
+
+{% load static %}
+<div class="card">
+    <div class="card-header">
+        <h3>Register</h3>
+    </div>
+    <div class="card-body">
+        <form method="POST" class="form-group" action="{% url 'register' %}">
+            {% csrf_token %}
+            <div class="col-sm-12">
+                <div class="form-group {% if form.first_name.errors %} error {% endif %}">
+                    <label for="id_first_name">First Name</label>
+                    <input type="text" class="form-control" name="first_name" id="id_first_name" placeholder="First Name">
+                    {% if form.errors %} <p class="error">{{form.first_name.errors}}</p> {% endif %}
+                </div>
+                <div class="form-group {% if form.last_name.errors %} error {% endif %}">
+                    <label for="id_last_name">Last Name</label>
+                    <input type="text" class="form-control" name="last_name" id="id_last_name" placeholder="Last Name">
+                    {% if form.errors %} <p class="error">{{form.last_name.errors}}</p> {% endif %}
+                </div>
+                <div class="form-group {% if form.email.errors %} error {% endif %}">
+                    <label for="id_email">Email</label>
+                    <input type="text" class="form-control" name="email" id="id_email" placeholder="Email">
+                    {% if form.errors %} <p class="error">{{form.email.errors}}</p> {% endif %}
+                </div>
+                <div class="form-group {% if form.phone.errors %} error {% endif %}">
+                    <label for="id_phone">Phone</label>
+                    <input type="text" class="form-control" name="phone" id=id_phone" placeholder="Phone">
+                    {% if form.errors %} <p class="error">{{form.phone.errors}}</p> {% endif %}
+                </div>
+                <div class="form-group {% if form.username.errors %} error {% endif %}">
+                    <label for="id_username">Username</label>
+                    <input type="text" class="form-control" name="username" id="id_username" placeholder="username">
+                    {% if form.errors %} <p class="error">{{form.username.errors}}</p> {% endif %}
+                </div>
+                <div class="form-group {% if form.password1.errors %} error {% endif %}">
+                    <label for="id_password1">Password</label>
+                    <input type="password" class="form-control" name="password1" id="id_password1" placeholder="choose a password">
+                    {% if form.errors %} <p class="error">{{form.password1.errors}}</p> {% endif %}
+                </div>
+                <div class="form-group {% if form.password2.errors %} error {% endif %}">
+                    <label for="id_password2">Confirm Password</label>
+                    <input type="password" class="form-control" name="password2" id="id_password2" placeholder="Retype your password">
+                    {% if form.errors %} <p class="error">{{form.password2.errors}}</p> {% endif %}
+                </div>
+            </div>
+                <!-- {{form}} -->
+            <button type="submit" class="btn btn-dark">Register</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
