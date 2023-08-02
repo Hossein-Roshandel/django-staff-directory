@@ -22,6 +22,7 @@ from django.conf import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls, name="admin"),
+    path("prometheus/", include("prometheus.urls")),
     path("register/", include("register.urls")),
     # path('polls/', include('polls.urls')),
     path("", include("directory.urls")),

@@ -2,6 +2,7 @@ version: "3.9"
 
 networks:
   traefik-default-network:
+    name: traefik-default-network
 
 services:
   postgres:

@@ -7,6 +7,7 @@ from django.core.files import File
 
 # from django.contrib.auth.models import User
 from django.urls import reverse
+from django_prometheus.models import ExportModelOperationsMixin
 from website.settings import DJANGO_BASE_URL, COMPANY_LOGO
 from accounts.models import CustomUser
 
@@ -47,7 +48,7 @@ class RecordMixin(BaseTimestampedModel, BaseUserTrackedModel):
         abstract = True
 
 
-class Staff(RecordMixin):
+class Staff(ExportModelOperationsMixin("staff"), RecordMixin):
     first_name = models.CharField(
         verbose_name="First Name", max_length=200, db_index=True, null=False
     )
@@ -102,7 +103,6 @@ class Staff(RecordMixin):
             vcf.append(f"URL;type=company:{self.company_url}")
         vcf.append("END:VCARD")
         return "\n".join(vcf)
-        
 
     @property
     def any_contact_data_changed(self):
@@ -151,7 +151,9 @@ class Staff(RecordMixin):
 
         # Save the image data to the qrcode_image field
         self.qrcode_img_vcard.save(
-            f"{self.last_name}-{self.first_name}-VCard-QRcode.png", File(img_buffer), save=False
+            f"{self.last_name}-{self.first_name}-VCard-QRcode.png",
+            File(img_buffer),
+            save=False,
         )
 
 

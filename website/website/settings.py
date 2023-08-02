@@ -59,12 +59,15 @@ INSTALLED_APPS = [
     "directory.apps.DirectoryConfig",
     "polls.apps.PollsConfig",
     "import_export",
+    "django_prometheus",
+    "prometheus.apps.PrometheusConfig",
     "register.apps.RegisterConfig",
     "accounts.apps.AccountsConfig",
     "debug_toolbar",
 ]
 
 MIDDLEWARE = [
+    "django_prometheus.middleware.PrometheusBeforeMiddleware",  # Must be first
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -73,6 +76,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_prometheus.middleware.PrometheusAfterMiddleware",  # Must be last
 ]
 
 ROOT_URLCONF = "website.urls"
@@ -101,14 +105,14 @@ WSGI_APPLICATION = "website.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
+        "ENGINE": "django_prometheus.db.backends.sqlite3",
         "NAME": Path(os.environ["DJANGO_SQLITE_DIR"]) / "db.sqlite3",
     }
 }
 
 if "POSTGRES_DB" in os.environ:
     DATABASES["default"] = {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django_prometheus.db.backends.postgresql",
         "NAME": os.environ["POSTGRES_DB"],
         "USER": os.environ["POSTGRES_USER"],
         "PASSWORD": os.environ["POSTGRES_PASSWORD"],
