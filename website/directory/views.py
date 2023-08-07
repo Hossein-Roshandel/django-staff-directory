@@ -26,7 +26,7 @@ class StaffDetailView(DetailView):
 
 @require_POST
 def search_staff(request: HttpRequest):
-    search_fields = ["fname", "lname", "bio", "email", "phone"]
+    search_fields = ["first_name", "last_name", "title", "bio", "email", "phone"]
     search_text = request.POST["search_text"]
     if search_text == "" or search_text == None:
         return render(request, INDEX_PAGE_TEMPLATE, {})
