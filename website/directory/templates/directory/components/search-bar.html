@@ -1,5 +1,5 @@
-<form class="search-bar d-flex"  role="search" method="POST" action="{% url 'search-staff' %}">
-    {% csrf_token %}
+<form class="search-bar d-flex"  role="search" method="GET" action="{% url 'search-staff' %}">
+    <!-- {% csrf_token %} -->
     <input
         class="form-control me-2"
         type="search"

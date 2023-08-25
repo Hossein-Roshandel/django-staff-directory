@@ -14,7 +14,7 @@ INDEX_PAGE_TEMPLATE = "directory/index.html"
 
 @require_safe
 def index(request: HttpRequest):
-    context = {"staffs": Staff.objects.all()}
+    context = {"staffs": Staff.objects.order_by('occupation','area','full_name').all()}
     return render(request, INDEX_PAGE_TEMPLATE, context)
 
 
@@ -24,10 +24,10 @@ class StaffDetailView(DetailView):
     template_name = "directory/staff_detail.html"
 
 
-@require_POST
+@require_safe
 def search_staff(request: HttpRequest):
-    search_fields = ["first_name", "last_name", "title", "bio", "email", "phone"]
-    search_text = request.POST["search_text"]
+    search_fields = ["full_name", "title", "bio", "email", "phone","team","area","occupation"]
+    search_text = request.GET["search_text"]
     if search_text == "" or search_text == None:
         return render(request, INDEX_PAGE_TEMPLATE, {})
     else:
