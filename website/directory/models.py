@@ -7,6 +7,7 @@ from django.core.files import File
 
 # from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 from django_prometheus.models import ExportModelOperationsMixin
 from website.settings import DJANGO_BASE_URL, COMPANY_LOGO
 from accounts.models import CustomUser
@@ -48,21 +49,39 @@ class RecordMixin(BaseTimestampedModel, BaseUserTrackedModel):
         abstract = True
 
 
+class TeamChoices(models.TextChoices):
+    Management = 'Management', _('Management')
+    SalesTeam = 'Sales Team', _('Sales Team')
+
 class Staff(ExportModelOperationsMixin("staff"), RecordMixin):
-    first_name = models.CharField(
-        verbose_name="First Name", max_length=200, db_index=True, null=False
+    # first_name = models.CharField(
+    #     verbose_name="First Name", max_length=200, db_index=True, null=False
+    # )
+    # last_name = models.CharField(
+    #     verbose_name="Last Name", max_length=200, db_index=True, null=False
+    # )
+    full_name = models.CharField(
+        verbose_name="Full Name", max_length=200, db_index=True, null=False
     )
-    last_name = models.CharField(
-        verbose_name="Last Name", max_length=200, db_index=True, null=False
+    nick_name = models.CharField(
+        verbose_name="Nick Name", max_length=200, db_index=True, null=True, blank=True
     )
+    gender = models.CharField(
+        verbose_name="Gender", max_length=10, null=True, blank=True
+    )
+    birthday = models.DateField(verbose_name='Birthday', db_index=True, null=True)
+    join_date = models.DateField(verbose_name="Join Date", null=True, blank=True)
     title = models.CharField(max_length=200, null=True, default="", blank=True)
-    email = models.EmailField(db_index=True, unique=True, null=False)
+    occupation = models.CharField(verbose_name="Occupation", max_length=50, null=True, blank=True, db_index=True)
+    team = models.CharField(max_length=50, choices=TeamChoices.choices, default=TeamChoices.SalesTeam, db_index=True)
+    area = models.CharField(max_length=50,null=True, blank=True)
+    email = models.EmailField(db_index=True, unique=True, null=True, blank=True)
     phone = models.CharField(max_length=200, db_index=True)
     office = models.CharField(max_length=200, null=True, blank=True)
     company_url = models.URLField(
         verbose_name="Company Website", max_length=200, null=True, blank=True
     )
-    bio = models.TextField()
+    bio = models.TextField(blank=True, null=True)
     slug = models.SlugField(
         verbose_name="WebLink Slug",
         max_length=100,
@@ -78,11 +97,11 @@ class Staff(ExportModelOperationsMixin("staff"), RecordMixin):
     )
 
     def __str__(self):
-        return f"{self.title} {self.first_name} {self.last_name}"
+        return f"{self.occupation} {self.full_name} {self.phone}"
 
-    @property
-    def full_name(self):
-        return f"{self.first_name} {self.last_name}"
+    # @property
+    # def full_name(self):
+    #     return f"{self.first_name} {self.last_name}"
 
     @property
     def contact_card_data(self):
@@ -91,7 +110,7 @@ class Staff(ExportModelOperationsMixin("staff"), RecordMixin):
             "BEGIN:VCARD",
             "VERSION:3.0",
             f"N:{self.full_name}",
-            f"TITLE:{self.title}",
+            f"TITLE:{self.occupation}",
             f"TEL:{self.phone}",
             f"EMAIL:{self.email}",
             f"URL;type=pref:{DJANGO_BASE_URL}{reverse('staff_details',args=[self.slug])}",
@@ -151,7 +170,7 @@ class Staff(ExportModelOperationsMixin("staff"), RecordMixin):
 
         # Save the image data to the qrcode_image field
         self.qrcode_img_vcard.save(
-            f"{self.last_name}-{self.first_name}-VCard-QRcode.png",
+            f"{self.full_name}-{self.phone}-VCard-QRcode.png",
             File(img_buffer),
             save=False,
         )

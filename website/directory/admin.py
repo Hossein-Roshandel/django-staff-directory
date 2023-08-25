@@ -8,12 +8,19 @@ from import_export.admin import ImportExportModelAdmin
 from import_export.fields import Field
 from .models import Staff
 
-
 # Register your models here.
 class StaffResource(resources.ModelResource):
-    first_name = Field(attribute="first_name", column_name="First Name")
-    last_name = Field(attribute="last_name", column_name="Last Name")
+    # first_name = Field(attribute="first_name", column_name="First Name")
+    # last_name = Field(attribute="last_name", column_name="Last Name")
+    full_name = Field(attribute="full_name", column_name="Full Name")
+    nick_name = Field(attribute="nick_name", column_name="Nick Name")
+    gender = Field(attribute='gender', column_name='Gender')
+    birthday = Field(attribute='birthday', column_name='Birthday')
+    join_date = Field(attribute='join_date', column_name='Join Date')
     title = Field(attribute="title", column_name="Title")
+    occupation = Field(attribute="occupation", column_name="Occupation")
+    team = Field(attribute="team", column_name="Team")
+    area = Field(attribute="area", column_name="Area")
     email = Field(attribute="email", column_name="Email")
     phone = Field(attribute="phone", column_name="Phone")
     office = Field(attribute="office", column_name="Office")
@@ -42,7 +49,7 @@ class StaffAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["slug"].widget = SlugAutofillWidget(
-            source_fields=["first_name", "last_name", "phone"], separator="-"
+            source_fields=["full_name", "phone"], separator="-"
         )
 
 
@@ -67,10 +74,10 @@ class StaffAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     form = StaffAdminForm
     resource_classes = [StaffResource]
 
-    list_display = ("full_name", "title", "email", "phone", "office", "is_active")
-    list_filter = ("title", "is_active", "created_at", "updated_at")
-    search_fields = ("first_name", "last_name", "title", "email", "phone", "office")
-    ordering = ("last_name", "first_name", "title")
+    list_display = ("full_name", "title",'area','occupation', "email", "phone", "office", "is_active")
+    list_filter = ("title", "is_active", "created_at", "updated_at", 'occupation', 'team', 'area')
+    search_fields = ("full_name", 'nick_name',"title", "email", "phone", "office")
+    ordering = ("full_name", "join_date",'area','occupation')
     readonly_fields = (
         "qrcode_img_vcard",
         "vcard_image",
@@ -85,12 +92,15 @@ class StaffAdmin(ImportExportModelAdmin, admin.ModelAdmin):
             None,
             {
                 "fields": (
-                    "first_name",
-                    "last_name",
+                    "full_name",
+                    'nick_name',
+                    'gender',
+                    'birthday',
                     "title",
                     "email",
                     "phone",
                     "office",
+                    ('team', 'area','occupation','join_date'),
                     "company_url",
                     "bio",
                     ("image", "staff_image"),

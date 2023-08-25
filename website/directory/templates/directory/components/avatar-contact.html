@@ -9,8 +9,8 @@
 </div>   
 <div class="contact-info">
     <h4 class="card-title"><a href={% url "staff_details" staff.slug %} class="details-link">{{ staff.full_name }}</a></h4>
-    <h5 class"card-title contact-text">({{staff.title}})</h5>
+    <h5 class"card-title contact-text">({{staff.occupation}})</h5>
     <h5 class="card-subtitle staff-name mb-2 text-muted">{{ staff.position }}</h5>
-    <div class="contact-text">{{ staff.email }}</div>
-    <div class="contact-text">{{ staff.phone }}</div>
+    {% if staff.email %}<div class="contact-text">{{ staff.email }}</div>{% endif %}
+    {% if staff.phone %}<div class="contact-text">{{ staff.phone }}</div>{% endif %}
 </div>
