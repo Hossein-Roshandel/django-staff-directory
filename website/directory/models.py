@@ -125,6 +125,8 @@ class Staff(ExportModelOperationsMixin("staff"), RecordMixin):
 
     @property
     def any_contact_data_changed(self):
+        if self.slug is None:
+            self.create_slug()
         if self.pk:
             old_data = Staff.objects.get(pk=self.pk).contact_card_data
             return old_data != self.contact_card_data
@@ -134,6 +136,13 @@ class Staff(ExportModelOperationsMixin("staff"), RecordMixin):
         if self.any_contact_data_changed:
             self.create_qrcode()
         super().save(*args, **kwargs)
+
+    def create_slug(self):
+        """
+        Automatically generate and update the slug field
+        """
+        slug = f"{self.full_name}-{self.phone[-5:]}".replace(" ", "-").lower()
+        self.slug = slug
 
     def create_qrcode(self):
         """
