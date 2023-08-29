@@ -13,6 +13,23 @@ services:
         - traefik-default-network
     volumes:
       - "postgres-data2:/var/lib/postgresql/data/:z"
+  
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin:z
+    networks:
+      - traefik-default-network
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.pgadmin.rule=Host(`pgadmin.${MY_DOMAIN}`)
+      - traefik.http.routers.pgadmin.tls.certresolver=le-resolver
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   django:
     build: 
