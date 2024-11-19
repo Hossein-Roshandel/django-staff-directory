@@ -52,6 +52,7 @@ if DEBUG:
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -66,6 +67,7 @@ INSTALLED_APPS = [
     "register.apps.RegisterConfig",
     "accounts.apps.AccountsConfig",
     "debug_toolbar",
+    'products',
 ]
 
 MIDDLEWARE = [
