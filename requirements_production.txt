@@ -12,3 +12,4 @@ psycopg2-binary==2.9.6
 qrcode==7.4.2
 sqlparse==0.4.4
 wait-for-it==2.2.1
+djangorestframework>=3.14,<3.15

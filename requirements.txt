@@ -25,3 +25,4 @@ trio-websocket==0.10.3
 urllib3==2.0.4
 wait-for-it==2.2.1
 wsproto==1.2.0
+djangorestframework>=3.14,<3.15
