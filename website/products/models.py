@@ -12,7 +12,9 @@ class Product(models.Model):
     rating = models.DecimalField(max_digits=3, decimal_places=2)
     brand = models.CharField(max_length=100)
     sku = models.CharField(max_length=50, unique=True)
-    images = ArrayField(models.URLField(max_length=500), blank=True, default=list)
+    images = models.ImageField(
+        verbose_name="Product Image", upload_to="product_images", blank=True
+    )
     created_at = models.DateTimeField(default=now)
     updated_at = models.DateTimeField(auto_now=True)
 
