@@ -68,12 +68,12 @@ class ProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
  
     @mark_safe
     def product_images(self, obj):
-        return f'<p><a href="{obj.image.url}" target="_blank">\
-                  <img src="{obj.image.url}" alt="{obj.image.url}" style="max-height: 200px;"/>\
+        return f'<p><a href="{obj.images.url}" target="_blank">\
+                  <img src="{obj.images.url}" alt="{obj.images.url}" style="max-height: 200px;"/>\
                   </a></p>'
 
-    # Override the change form template to include the JavaScript for autofilling the slug
-    change_form_template = "admin/product_change_form.html"
+    # # Override the change form template to include the JavaScript for autofilling the slug
+    # change_form_template = "admin/product_change_form.html"
 
     def save_model(self, request, obj, form, change):
         if not change:
