@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product
+from .models import Product, Category
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 from import_export.fields import Field
@@ -32,8 +32,21 @@ class ProductAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
        
+class CategoryResource(resources.ModelResource):
+    name = Field(attribute="name", column_name="Name")
+    description = Field(attribute="description", column_name="Description")
+    
+    class Meta:
+        model = Category
 
+class CategoryAdminForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = "__all__"
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+          
 class ProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     form = ProductAdminForm
     resource_classes = [ProductResource]
@@ -84,3 +97,4 @@ class ProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 
 
 admin.site.register(Product, ProductAdmin)
+admin.site.register(Category)

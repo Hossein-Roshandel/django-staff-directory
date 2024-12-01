@@ -16,10 +16,9 @@ class GetProductListView(generics.ListAPIView):
         by filtering against a `category` query parameter in the URL.
         """
         queryset = Product.objects.all()
-        category = self.request.query_params.get('category')
-        print("HELLO", category)
-        if category is not None:
-            queryset = queryset.filter(category=category)
+        category_id = self.request.query_params.get('category', None)
+        if category_id is not None:
+            queryset = queryset.filter(category_id=category_id)
         return queryset
 
 # Retrieve, update, or delete a product
