@@ -32,8 +32,8 @@ DJANGO_SERVER_EMAIL=root@localhost
 DJANGO_DEFAULT_FROM_EMAIL=webmaster@localhost
 DJANGO_ADMIN_NAME=
 DJANGO_ADMIN_EMAIL=
-#for sqlite
-DJANGO_SQLITE_DIR=/sqlite
+
+# DJANGO_SQLITE_DIR=/sqlite #for sqlite in debug mode
 DJANGO_SUPERUSER_USERNAME=admin
 DJANGO_SUPERUSER_PASSWORD=admin
 DJANGO_SUPERUSER_EMAIL=admin@example.com
