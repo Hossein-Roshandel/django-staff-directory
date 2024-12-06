@@ -1,9 +1,10 @@
 from django.contrib import admin
-from .models import Product, Category
+from .models import Product, Category, ProductImage
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 from import_export.fields import Field
 from django import forms
+from django.utils.html import format_html 
 from django.utils.safestring import mark_safe
 
 
@@ -19,7 +20,7 @@ class ProductResource(resources.ModelResource):
     sku = Field(attribute="sku", column_name="Sku")
     created_at = Field(attribute="created_at", column_name="Created At", readonly=True)
     updated_at = Field(attribute="updated_at", column_name="Updated At", readonly=True)
-    images = Field(attribute="images", column_name="Product Images", readonly=True)
+    # images = Field(attribute="images", column_name="Product Images", readonly=True)
   
     class Meta:
         model = Product
@@ -46,15 +47,34 @@ class CategoryAdminForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-          
+
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 1  # Number of empty forms to display
+    fields = ('image', 'alt_text')
+    readonly_fields = ()
+    show_change_link = True
+
 class ProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     form = ProductAdminForm
     resource_classes = [ProductResource]
 
-    list_display = ( "title",'description','price', "category", "discount_percentage", "rating", "sku")
-    list_filter = ("title","category", "discount_percentage", "brand", "sku" ,"created_at", "updated_at")
-    search_fields = ("title","price","category", "discount_percentage", "brand", "sku" )
-    ordering = ("title", "price", "category", "discount_percentage", "brand", "sku" )
+    list_display = (
+        "title", "description", "price", "category", "discount_percentage", 
+        "rating", "sku"
+    )
+    list_filter = (
+        "title", "category", "discount_percentage", "brand", 
+        "sku", "created_at", "updated_at"
+    )
+    search_fields = (
+        "title", "price", "category", "discount_percentage", 
+        "brand", "sku"
+    )
+    ordering = (
+        "title", "price", "category", "discount_percentage", 
+        "brand", "sku"
+    )
     readonly_fields = (
         "product_images",
         "created_at",
@@ -65,9 +85,15 @@ class ProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
             None,
             {
                 "fields": (
-                    "title",'description','price', "category", "discount_percentage", "rating", "sku",
-                    ("images", "product_images"),
+                    "title", 'description', 'price', "category", 
+                    "discount_percentage", "rating", "sku",
                 )
+            },
+        ),
+        (
+            "Images",
+            {
+                "fields": ("product_images",),
             },
         ),
         (
@@ -78,12 +104,25 @@ class ProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
         ),
     )
 
- 
+    inlines = [ProductImageInline]
+
     @mark_safe
     def product_images(self, obj):
-        return f'<p><a href="{obj.images.url}" target="_blank">\
-                  <img src="{obj.images.url}" alt="{obj.images.url}" style="max-height: 200px;"/>\
-                  </a></p>'
+        """Display all product images."""
+        images_html = ""
+        for image in obj.images.all():
+            images_html += f"""
+                <p>
+                  <a href="{image.image.url}" target="_blank">
+                      <img src="{image.image.url}" alt="{image.alt_text or image.image.url}" 
+                           style="max-height: 200px; margin: 5px;"/>
+                  </a>
+                </p>
+            """
+        return format_html(images_html) if images_html else "No images available"
+
+    product_images.short_description = "Product Images"
+
 
     # # Override the change form template to include the JavaScript for autofilling the slug
     # change_form_template = "admin/product_change_form.html"

@@ -15,7 +15,7 @@ class GetProductListView(generics.ListAPIView):
         Optionally restricts the returned purchases to a given product,
         by filtering against a `category` query parameter in the URL.
         """
-        queryset = Product.objects.all()
+        queryset = Product.objects.prefetch_related('images').all()
         category_id = self.request.query_params.get('category', None)
         if category_id is not None:
             queryset = queryset.filter(category_id=category_id)
@@ -23,6 +23,6 @@ class GetProductListView(generics.ListAPIView):
 
 # Retrieve, update, or delete a product
 class GetSpecificProductView(generics.RetrieveAPIView):
-    queryset = Product.objects.all()
+    queryset = Product.objects.prefetch_related('images').all()
     serializer_class = ProductSerializer
     
