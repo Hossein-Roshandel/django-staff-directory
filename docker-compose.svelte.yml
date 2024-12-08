@@ -1,0 +1,68 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:15
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - "postgres-data:/var/lib/postgresql/data/"
+
+  django:
+    build: .
+    image: django-docker
+    env_file: .env
+    environment:
+      - "DJANGO_DEBUG=true"
+    restart: unless-stopped
+    command:
+      ["sh", "-c", "su-exec user python manage.py runserver 0.0.0.0:8000"]
+    volumes:
+      - "media-data:/var/www/media"
+      - "./website:/usr/src/website:Z"
+    depends_on:
+      - postgres
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.django.rule=Host(`api.localhost`)"
+      - "traefik.http.routers.django.entrypoints=web"
+      - "traefik.http.services.django.loadbalancer.server.port=8000"
+
+  sveltekit:
+    image: svelte-qq:master
+    environment:
+      - PORT=3000
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sveltekit.rule=Host(`localhost`)" # Replace `localhost` with your domain
+      - "traefik.http.routers.sveltekit.entrypoints=web"
+      - "traefik.http.routers.sveltekit.priority=1"
+
+  reverse-proxy:
+    image: traefik:v2.9
+    env_file: .env
+    restart: unless-stopped
+    privileged: true
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.le-resolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.le-resolver.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.le-resolver.acme.email=admin@yourdomain.com"
+      - "--certificatesresolvers.le-resolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+volumes:
+  postgres-data:
+  media-data:
