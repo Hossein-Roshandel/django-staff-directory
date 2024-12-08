@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "debug_toolbar",
     'products',
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -80,6 +81,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",  
+    "django.middleware.common.CommonMiddleware",
     "django_prometheus.middleware.PrometheusAfterMiddleware",  # Must be last
 ]
 
@@ -235,6 +238,16 @@ IMPORT_EXPORT_ESCAPE_FORMULAE_ON_EXPORT = True
 IMPORT_EXPORT_IMPORT_PERMISSION_CODE = "add"
 IMPORT_EXPORT_EXPORT_PERMISSION_CODE = "view"
 
+#CORS setting
+CORS_ALLOW_CREDENTIALS = True  # Allow credentials like cookies
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173", 
+    "http://localhost:3100",# Default SvelteKit port
+]
+# Alternatively, use regex if you have multiple local ports:
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^http://localhost:\d+$",
+]
 
 # Log settings
 LOGGING = {
