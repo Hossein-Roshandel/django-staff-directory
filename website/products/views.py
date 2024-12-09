@@ -6,7 +6,7 @@ from .serializers import ProductSerializer
 
 INDEX_PAGE_TEMPLATE = "products/index.html"
 
-# List all products or create a new one
+# List all products
 class GetProductListView(generics.ListAPIView):
     serializer_class = ProductSerializer
 
@@ -21,7 +21,7 @@ class GetProductListView(generics.ListAPIView):
             queryset = queryset.filter(category_id=category_id)
         return queryset
 
-# Retrieve, update, or delete a product
+# Retrieve a product
 class GetSpecificProductView(generics.RetrieveAPIView):
     queryset = Product.objects.prefetch_related('images').all()
     serializer_class = ProductSerializer
