@@ -238,17 +238,21 @@ IMPORT_EXPORT_ESCAPE_FORMULAE_ON_EXPORT = True
 IMPORT_EXPORT_IMPORT_PERMISSION_CODE = "add"
 IMPORT_EXPORT_EXPORT_PERMISSION_CODE = "view"
 
-#CORS setting
-CORS_ALLOW_CREDENTIALS = True  # Allow credentials like cookies
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173", 
-    "http://localhost:3100",# Default SvelteKit port
-]
-# Alternatively, use regex if you have multiple local ports:
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^http://localhost:\d+$",
+# Allow all origins
+CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins
+
+# Allow credentials if needed (e.g., for cookies)
+CORS_ALLOW_CREDENTIALS = True
+
+# Allow all common methods
+CORS_ALLOW_METHODS = [
+    "GET", "OPTIONS",
 ]
 
+# Allow common headers
+CORS_ALLOW_HEADERS = [
+    "content-type", "authorization", "x-csrftoken", "x-requested-with",
+]
 # Log settings
 LOGGING = {
     "version": 1,
