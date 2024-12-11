@@ -21,13 +21,15 @@ from django.conf import settings
 
 
 urlpatterns = [
-    path("admin/", admin.site.urls, name="admin"),
-    path("prometheus/", include("prometheus.urls")),
-    path("register/", include("register.urls")),
-    path("products/", include("products.urls")),
-    # path('polls/', include('polls.urls')),
-    path("", include("directory.urls")),
-    path("__debug__/", include("debug_toolbar.urls")),
+    path('api/', include([
+        path("admin/", admin.site.urls, name="admin"),
+        path("prometheus/", include("prometheus.urls")),
+        path("register/", include("register.urls")),
+        path("products/", include("products.urls")),
+        # path('polls/', include('polls.urls')),
+        path("", include("directory.urls")),
+        path("__debug__/", include("debug_toolbar.urls")),
+    ])),
 ]
 
 # Serve media files from MEDIA_ROOT. It will only work when DEBUG=True is set.

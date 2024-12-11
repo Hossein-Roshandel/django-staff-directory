@@ -169,13 +169,13 @@ MEDIA_ROOT = os.environ["DJANGO_MEDIA_ROOT"]
 
 # URL that handles the media served from MEDIA_ROOT.
 # Examples: "http://example.com/media/", "http://media.example.com/"
-MEDIA_URL = os.getenv("DJANGO_MEDIA_URL", "media/")
+MEDIA_URL = os.getenv("DJANGO_MEDIA_URL", "api/media/")
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "api/static/"
 
 STATIC_ROOT = os.environ["DJANGO_STATIC_ROOT"]
 
