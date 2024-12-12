@@ -175,7 +175,7 @@ MEDIA_URL = os.getenv("DJANGO_MEDIA_URL", "media/")
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "/static/"
+STATIC_URL = "static/"
 
 STATIC_ROOT = os.environ["DJANGO_STATIC_ROOT"]
 
@@ -184,7 +184,7 @@ STATICFILES_DIRS = [
 ]
 # os.path.join(BASE_DIR, 'directory/static'),]
 
-COMPANY_LOGO = os.getenv("COMPANY_LOGO", "images/logo.png")
+COMPANY_LOGO = os.getenv("COMPANY_LOGO", os.path.join(STATIC_ROOT, "images/logo.png"))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

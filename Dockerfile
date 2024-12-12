@@ -19,7 +19,7 @@ ARG GUNICORN_WORKERS=2
 ARG GUNICORN_TIMEOUT=60
 ARG GUNICORN_LOG_LEVEL=error
 ARG DJANGO_BASE_DIR=/usr/src/$PROJECT_NAME
-ARG DJANGO_STATIC_ROOT=
+ARG DJANGO_STATIC_ROOT=/var/www/static
 ARG DJANGO_MEDIA_ROOT=/var/www/media
 ARG DJANGO_SQLITE_DIR=/sqlite
 # The superuser with the data below will be created only if there are no users in the database!
