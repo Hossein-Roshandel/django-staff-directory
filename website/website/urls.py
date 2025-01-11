@@ -25,7 +25,7 @@ urlpatterns = [
     path("prometheus/", include("prometheus.urls")),
     path("register/", include("register.urls")),
     path("products/", include("products.urls")),
-    path("banners/", include('banners.url')),
+    path("banner/", include('banner.urls')),
     # path('polls/', include('polls.urls')),
     path("", include("directory.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
