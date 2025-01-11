@@ -1,5 +1,5 @@
 from django.contrib import admin
-
+from .models import Banner, SocialLink
 # Register your models here.
 
 class BannerAdmin(admin.ModelAdmin):
@@ -11,3 +11,6 @@ class SocialLinkAdmin(admin.ModelAdmin):
     list_display = ('id', 'platform', 'url')
     list_editable = ('platform', 'url')
     search_fields = ('platform',)
+
+admin.site.register(Banner, BannerAdmin)
+admin.site.register(SocialLink, SocialLinkAdmin)

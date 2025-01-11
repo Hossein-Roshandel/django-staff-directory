@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "debug_toolbar",
     'products',
+    'banner',
     "corsheaders",
 ]
 
