@@ -8,11 +8,11 @@ from .models import Banner, SocialLink, Journal
 
 # Create your views here.
 class BannerViewSet(generics.ListAPIView):
-    queryset = Banner.objects.all()
+    queryset = Banner.objects.all().order_by('index')
     serializer_class = BannerSerializer
 
 class SocialLinkViewSet(generics.ListAPIView):
-    queryset = SocialLink.objects.all()
+    queryset = SocialLink.objects.all().order_by('index')
     serializer_class = SocialLinkSerializer
 
 class JournalViewSet(generics.ListAPIView):
