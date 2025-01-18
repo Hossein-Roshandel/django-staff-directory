@@ -17,6 +17,9 @@ class SocialLink(models.Model):
     SOCIAL_CHOICES = [
         ('facebook', 'Facebook'),
         ('instagram', 'Instagram'),
+        ('whatsapp', 'Whatsapp'),
+        ('telegram', 'Telegram'),
+        ('youtube', 'Youtube'),
         ('linkedin-in', 'Linkedin'),
         ('x-twitter', 'X twitter'),
         ('tiktok', 'Tiktok'),
