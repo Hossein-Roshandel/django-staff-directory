@@ -46,6 +46,3 @@ class JournalImage(models.Model):
     
     def __str__(self):
         return f"Image for {self.journal.title}"
-
-    def __str__(self):
-        return f"{self.platform}: {self.url}"
