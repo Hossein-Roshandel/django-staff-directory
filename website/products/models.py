@@ -31,9 +31,7 @@ class Product(models.Model):
     rating = models.DecimalField(max_digits=3, decimal_places=2)
     brand = models.CharField(max_length=100)
     sku = models.CharField(max_length=50, unique=True)
-    # images = models.ImageField(
-    #     verbose_name="Product Image", upload_to="product_images", blank=True
-    # )
+    related_products = models.ManyToManyField('self', blank=True, symmetrical=False, related_name="related_to")
     created_at = models.DateTimeField(default=now)
     updated_at = models.DateTimeField(auto_now=True)
 

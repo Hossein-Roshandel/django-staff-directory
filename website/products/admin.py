@@ -32,7 +32,9 @@ class ProductAdminForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-       
+        # Add `related_products` field to the form (if it's missing)
+        self.fields['related_products'].queryset = Product.objects.all()
+
 class CategoryResource(resources.ModelResource):
     name = Field(attribute="name", column_name="Name")
     description = Field(attribute="description", column_name="Description")
@@ -86,7 +88,7 @@ class ProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
             {
                 "fields": (
                     "title", 'description', 'price', "category", 
-                    "discount_percentage", "rating", "sku",
+                    "discount_percentage", "rating", "sku", "related_products",
                 )
             },
         ),
@@ -133,7 +135,6 @@ class ProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
         else:
             obj.updated_by = request.user
         obj.save()
-
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category)
