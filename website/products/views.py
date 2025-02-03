@@ -1,8 +1,8 @@
 
 # Create your views here.
 from rest_framework import generics
-from .models import Product
-from .serializers import ProductSerializer
+from .models import Product, Category
+from .serializers import ProductSerializer, CategorySerializer
 
 INDEX_PAGE_TEMPLATE = "products/index.html"
 
@@ -26,3 +26,8 @@ class GetSpecificProductView(generics.RetrieveAPIView):
     queryset = Product.objects.prefetch_related('images').all()
     serializer_class = ProductSerializer
     
+
+# Retrieve categories
+class GetCategoryListView(generics.ListAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()

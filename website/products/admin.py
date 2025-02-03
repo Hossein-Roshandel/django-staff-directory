@@ -38,6 +38,7 @@ class ProductAdminForm(forms.ModelForm):
 class CategoryResource(resources.ModelResource):
     name = Field(attribute="name", column_name="Name")
     description = Field(attribute="description", column_name="Description")
+    image = Field(attribute="image", column_name="Image")
     
     class Meta:
         model = Category
