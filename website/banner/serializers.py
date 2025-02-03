@@ -21,4 +21,4 @@ class JournalSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Journal
-        fields = ['id', 'title', 'description', 'images']
+        fields = ['id', 'title', 'description','videoLink', 'images']

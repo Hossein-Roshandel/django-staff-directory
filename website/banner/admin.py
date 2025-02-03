@@ -21,8 +21,8 @@ class JournalImageInline(admin.TabularInline):
     show_change_link = True
 
 class JournalAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    list_display = ('id', 'title', 'description')
-    list_editable = ('title', 'description')
+    list_display = ('id', 'title', 'videoLink', 'description')
+    list_editable = ('title', 'videoLink','description')
     search_fields = ('title',)
     inlines = [JournalImageInline]
     

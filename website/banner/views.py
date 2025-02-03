@@ -18,3 +18,7 @@ class SocialLinkViewSet(generics.ListAPIView):
 class JournalViewSet(generics.ListAPIView):
     queryset = Journal.objects.prefetch_related('images').all()
     serializer_class = JournalSerializer
+
+class GetJournalViewSetById(generics.RetrieveAPIView):
+    queryset = Journal.objects.prefetch_related('images').all()
+    serializer_class = JournalSerializer

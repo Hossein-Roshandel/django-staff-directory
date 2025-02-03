@@ -34,6 +34,7 @@ class SocialLink(models.Model):
 
 class Journal(models.Model):
     title = models.CharField(max_length=255)
+    videoLink = models.URLField(blank=True, null=True)
     description = models.TextField()
 
     def __str__(self):
