@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Category, ProductImage
+from .models import Product, Category, ProductImage, ProductVariation
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 from import_export.fields import Field
@@ -58,6 +58,13 @@ class ProductImageInline(admin.TabularInline):
     readonly_fields = ()
     show_change_link = True
 
+class ProductVariationInline(admin.TabularInline):
+    model = ProductVariation
+    extra = 1  # Number of empty forms to display
+    fields = ('variation_name', 'variation_value','price','discount_percentage','stock','sku','image')
+    readonly_fields = ()
+    show_change_link = True
+
 class ProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     form = ProductAdminForm
     resource_classes = [ProductResource]
@@ -107,8 +114,8 @@ class ProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
         ),
     )
 
-    inlines = [ProductImageInline]
-
+    inlines = [ProductImageInline, ProductVariationInline]
+    
     @mark_safe
     def product_images(self, obj):
         """Display all product images."""
