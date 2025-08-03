@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+
 import os
 
 from pathlib import Path
@@ -52,7 +53,7 @@ if DEBUG:
 # Application definition
 
 INSTALLED_APPS = [
-    'rest_framework',
+    "rest_framework",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -67,8 +68,8 @@ INSTALLED_APPS = [
     "register.apps.RegisterConfig",
     "accounts.apps.AccountsConfig",
     "debug_toolbar",
-    'products',
-    'banner',
+    "products",
+    "banner",
     "corsheaders",
 ]
 
@@ -82,7 +83,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "corsheaders.middleware.CorsMiddleware",  
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django_prometheus.middleware.PrometheusAfterMiddleware",  # Must be last
 ]
@@ -247,12 +248,16 @@ CORS_ALLOW_CREDENTIALS = True
 
 # Allow all common methods
 CORS_ALLOW_METHODS = [
-    "GET", "OPTIONS",
+    "GET",
+    "OPTIONS",
 ]
 
 # Allow common headers
 CORS_ALLOW_HEADERS = [
-    "content-type", "authorization", "x-csrftoken", "x-requested-with",
+    "content-type",
+    "authorization",
+    "x-csrftoken",
+    "x-requested-with",
 ]
 # Log settings
 LOGGING = {

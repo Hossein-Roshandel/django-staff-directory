@@ -1,5 +1,6 @@
 from functools import reduce
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView
 from django.views.decorators.http import require_safe, require_POST
 from django.http import HttpResponse
@@ -13,8 +14,11 @@ INDEX_PAGE_TEMPLATE = "directory/index.html"
 
 
 @require_safe
+@login_required(login_url="/admin/login/")
 def index(request: HttpRequest):
-    context = {"staffs": Staff.objects.order_by('occupation','area','full_name').all()}
+    context = {
+        "staffs": Staff.objects.order_by("occupation", "area", "full_name").all()
+    }
     return render(request, INDEX_PAGE_TEMPLATE, context)
 
 
@@ -25,8 +29,18 @@ class StaffDetailView(DetailView):
 
 
 @require_safe
+@login_required(login_url="/admin/login/")
 def search_staff(request: HttpRequest):
-    search_fields = ["full_name", "title", "bio", "email", "phone","team","area","occupation"]
+    search_fields = [
+        "full_name",
+        "title",
+        "bio",
+        "email",
+        "phone",
+        "team",
+        "area",
+        "occupation",
+    ]
     search_text = request.GET["search_text"]
     if search_text == "" or search_text == None:
         return render(request, INDEX_PAGE_TEMPLATE, {})
